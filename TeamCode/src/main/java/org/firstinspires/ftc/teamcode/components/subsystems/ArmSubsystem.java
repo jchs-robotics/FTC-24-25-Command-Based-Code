@@ -6,45 +6,53 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class ArmSubsystem extends SubsystemBase {
 
 
 
-    private DcMotor LArm;// = hardwareMap.get(DcMotor.class, "left pivot");
-    private DcMotor RArm;// = HardwareMap.get(DcMotor.class, "right pivot");
+    private DcMotor FArm;// = hardwareMap.get(DcMotor.class, "left pivot");
+    private DcMotor BArm;// = hardwareMap.get(DcMotor.class, "right pivot");
 
-    public double armEncoder = LArm.getCurrentPosition();
+
+
+    public double armEncoder;// = LArm.getCurrentPosition();
 
     private double manualPower;
 
+
+
     // Creates subsystem devices
-//    public PivotSubsystem(final HardwareMap hMap, final String LName, final String RName){
-//        LPivot = hMap.get(DcMotor.class, LName);
-//        RPivot = hMap.get(DcMotor.class, RName);
-//
-//        RPivot.setDirection(DcMotorSimple.Direction.REVERSE);
-//    }
-    public ArmSubsystem(){
+    public ArmSubsystem(final HardwareMap hMap, final String FName, final String BName){
+        FArm = hMap.get(DcMotor.class, FName);
+        BArm = hMap.get(DcMotor.class, BName);
 
-        LArm = hardwareMap.get(DcMotor.class, "left arm");
-        RArm = hardwareMap.get(DcMotor.class, "right arm");
+        BArm.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        RArm.setDirection(DcMotorSimple.Direction.REVERSE);
+        armEncoder = FArm.getCurrentPosition();
     }
+
+//    public ArmSubsystem(){
+//
+////        LArm = hardwareMap.get(DcMotor.class, "leftTelescope");
+////        RArm = hardwareMap.get(DcMotor.class, "rightTelescope");
+//
+////        RArm.setDirection(DcMotorSimple.Direction.REVERSE);
+////
+////        armEncoder = LArm.getCurrentPosition();
+//    }
 
 
     // extend/retract telescope
-    public Command setMotors(double speed) {
-        LArm.setPower(speed);
-        RArm.setPower(speed);
-
-        return null;
+    public void setMotors(double speed) {
+        FArm.setPower(speed);
+        BArm.setPower(speed);
     }
 
 
 
-    public void setDefaultCommand(Boolean A, Boolean X) {
+    public void setDefaultCommand(boolean A, boolean X) {
         if (A) {
             manualPower = 0.9;
         } else if (X) {
@@ -53,8 +61,8 @@ public class ArmSubsystem extends SubsystemBase {
             manualPower = 0;
         }
 
-        LArm.setPower(manualPower);
-        RArm.setPower(manualPower);
+        FArm.setPower(manualPower);
+        BArm.setPower(manualPower);
 
     }
 

@@ -16,24 +16,27 @@ public class PivotSubsystem extends SubsystemBase {
     private DcMotor LPivot;// = hardwareMap.get(DcMotor.class, "left pivot");
     private DcMotor RPivot;// = HardwareMap.get(DcMotor.class, "right pivot");
 
-    public double pivotEncoder = LPivot.getCurrentPosition();
+    public double pivotEncoder;
 
-    // Creates subsystem devices
-//    public PivotSubsystem(final HardwareMap hMap, final String LName, final String RName){
-//        LPivot = hMap.get(DcMotor.class, LName);
-//        RPivot = hMap.get(DcMotor.class, RName);
-//
-//        RPivot.setDirection(DcMotorSimple.Direction.REVERSE);
-//    }
-    public PivotSubsystem(){
-
-        LPivot = hardwareMap.get(DcMotor.class, "left pivot");
-        RPivot = hardwareMap.get(DcMotor.class, "right pivot");
-
-
+     // Creates subsystem devices
+    public PivotSubsystem(final HardwareMap hMap, final String LName, final String RName){
+        LPivot = hMap.get(DcMotor.class, LName);
+        RPivot = hMap.get(DcMotor.class, RName);
 
         RPivot.setDirection(DcMotorSimple.Direction.REVERSE);
+
+    pivotEncoder = LPivot.getCurrentPosition();
     }
+
+//    public PivotSubsystem(){
+//
+//        LPivot = hardwareMap.get(DcMotor.class, "leftPivot");
+//        RPivot = hardwareMap.get(DcMotor.class, "rightPivot");
+//
+//        RPivot.setDirection(DcMotorSimple.Direction.REVERSE);
+//
+//        pivotEncoder = LPivot.getCurrentPosition();
+//    }
 
 
     // rotates pivot

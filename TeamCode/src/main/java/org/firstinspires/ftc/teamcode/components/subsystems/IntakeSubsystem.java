@@ -4,35 +4,50 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class IntakeSubsystem extends SubsystemBase {
 
     // needs 1 intake and 2 wrist
-    private Servo LWrist;
-    private Servo RWrist;
+    // CRServo allows the servo to spin forever
+    private CRServo LWrist;// = hardwareMap.get(CRServo.class, "leftWrist");
+    private CRServo RWrist;// = hardwareMap.get(CRServo.class, "rightWrist");
 
-    private CRServo Intake; // CRServo allows the servo to spin forever
+    private CRServo Intake;// = hardwareMap.get(CRServo.class, "intake");
 
-    private double wristPos;
+    private double wristPower;
     private double intakePower;
 
 
-    public IntakeSubsystem() {
-        LWrist = hardwareMap.get(Servo.class, "left wrist");
-        RWrist = hardwareMap.get(Servo.class, "right wrist");
 
-        Intake = hardwareMap.get(CRServo.class, "intake");
+    public IntakeSubsystem(final HardwareMap hMap, final String LName, final String RName, final String intakeName){
+        LWrist = hMap.get(CRServo.class, LName);
+        RWrist = hMap.get(CRServo.class, RName);
+
+        LWrist.setDirection(CRServo.Direction.REVERSE);
+
+        Intake = hMap.get(CRServo.class, intakeName);
     }
+
+
+//    public IntakeSubsystem() {
+//        LWrist = hardwareMap.get(CRServo.class, "leftWrist");
+//        RWrist = hardwareMap.get(CRServo.class, "rightWrist");
+//
+//        Intake = hardwareMap.get(CRServo.class, "intake");
+//    }
 
 
 
 
   // spin stuff
-    public Command setWrist(double setpoint) {
-        LWrist.setPosition(setpoint);
-        RWrist.setPosition(setpoint);
+    public Command setWrist(double wristPower) {
+        LWrist.setPower(wristPower);
+        RWrist.setPower(wristPower);
         return null;
     }
 
@@ -44,7 +59,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
 
-    public void setDefaultCommand(Boolean Lump, Boolean Rump, Boolean B, Boolean Y) {
+    public void setDefaultCommand(boolean Lump, boolean Rump, boolean B, boolean Y) {
 
 
         // intake
@@ -62,13 +77,15 @@ public class IntakeSubsystem extends SubsystemBase {
 
         // wrist
         if (B) {
-            wristPos = 300;
+            wristPower = -1;
         } else if (Y) {
-            wristPos = 0;
+            wristPower = 1;
+        } else {
+            wristPower = 0;
         }
 
-        LWrist.setPosition(wristPos);
-        RWrist.setPosition(wristPos);
+        LWrist.setPower(wristPower);
+        RWrist.setPower(wristPower);
     }
 
 

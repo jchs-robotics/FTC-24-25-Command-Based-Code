@@ -15,12 +15,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class DriveSubsystem extends SubsystemBase {
 
-    private DcMotor FLDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
-    private DcMotor BLDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
-    private DcMotor FRDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
-    private DcMotor BRDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+    private DcMotor FLDrive;// = hardwareMap.get(DcMotor.class, "leftFront");
+    private DcMotor BLDrive;// = hardwareMap.get(DcMotor.class, "leftBack");
+    private DcMotor FRDrive;// = hardwareMap.get(DcMotor.class, "rightFront");
+    private DcMotor BRDrive;// = hardwareMap.get(DcMotor.class, "rightBack");
 
-    private IMU imu = hardwareMap.get(IMU.class, "imu");
+    private IMU imu;
 
     //FIXME Adjust the orientation parameters to match your robot
     IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
@@ -28,11 +28,31 @@ public class DriveSubsystem extends SubsystemBase {
             RevHubOrientationOnRobot.UsbFacingDirection.RIGHT));
 
 
-    public DriveSubsystem(){
+
+
+    public DriveSubsystem(final HardwareMap hMap, final String FLName, final String BLName, final String FRName, final String BRName, final String imuName) {
+        FLDrive = hMap.get(DcMotor.class, FLName);
+        BLDrive = hMap.get(DcMotor.class, BLName);
+        FRDrive = hMap.get(DcMotor.class, FRName);
+        BRDrive = hMap.get(DcMotor.class, BRName);
+
+        imu = hMap.get(IMU.class, imuName);
     }
+
+//    public DriveSubsystem(){
+//        FLDrive = hardwareMap.get(DcMotor.class, "leftFront");
+//        BLDrive = hardwareMap.get(DcMotor.class, "leftBack");
+//        FRDrive = hardwareMap.get(DcMotor.class, "rightFront");
+//        BRDrive = hardwareMap.get(DcMotor.class, "rightBack");
+//
+//        imu = hardwareMap.get(IMU.class, "imu");
+//    }
 
     public void initializeDrive() {
         imu.initialize(parameters);
+
+        FLDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        BLDrive.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
 
@@ -40,7 +60,9 @@ public class DriveSubsystem extends SubsystemBase {
 // move the motors
     }
 
-
+    public void resetYaw() {
+        imu.resetYaw();
+    }
 
     public void setDefaultCommand(double inputX, double inputY, double inputRX) {
 

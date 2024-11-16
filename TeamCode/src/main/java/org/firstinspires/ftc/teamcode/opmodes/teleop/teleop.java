@@ -12,6 +12,7 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.components.subsystems.ArmSubsystem;
@@ -23,26 +24,27 @@ import org.firstinspires.ftc.teamcode.components.subsystems.PivotSubsystem;
 //@Config
 @TeleOp(name = "Tele Op")
 public class teleop extends CommandOpMode {
-    private GamepadEx manipulatorController = new GamepadEx(gamepad2);
-    private GamepadEx driveController = new GamepadEx(gamepad1);
+
+    private GamepadEx manipulatorController; // = new GamepadEx(gamepad2);
+    private GamepadEx driveController; // = new GamepadEx(gamepad1);
 
 
     // manipulator buttons
     // set positions (command groups)
-    Button mDown = new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_DOWN);
-    Button mLeft = new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_LEFT);
-    Button mRight = new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_RIGHT);
-
-
-    // manual control
-    Button mA = new GamepadButton(manipulatorController, GamepadKeys.Button.A);
-    Button mB = new GamepadButton(manipulatorController, GamepadKeys.Button.B);
-
-    Button mLeftBumper = new GamepadButton(manipulatorController, GamepadKeys.Button.LEFT_BUMPER);
-    Button mRightBumper = new GamepadButton(manipulatorController, GamepadKeys.Button.RIGHT_BUMPER);
-
-    TriggerReader mRightTrigger = new TriggerReader(manipulatorController, GamepadKeys.Trigger.RIGHT_TRIGGER);
-    TriggerReader mLeftTrigger = new TriggerReader(manipulatorController, GamepadKeys.Trigger.LEFT_TRIGGER);
+//    Button mDown = new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_DOWN);
+//    Button mLeft = new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_LEFT);
+//    Button mRight = new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_RIGHT);
+//
+//
+//    // manual control
+//    Button mA = new GamepadButton(manipulatorController, GamepadKeys.Button.A);
+//    Button mB = new GamepadButton(manipulatorController, GamepadKeys.Button.B);
+//
+//    Button mLeftBumper = new GamepadButton(manipulatorController, GamepadKeys.Button.LEFT_BUMPER);
+//    Button mRightBumper = new GamepadButton(manipulatorController, GamepadKeys.Button.RIGHT_BUMPER);
+//
+//    TriggerReader mRightTrigger = new TriggerReader(manipulatorController, GamepadKeys.Trigger.RIGHT_TRIGGER);
+//    TriggerReader mLeftTrigger = new TriggerReader(manipulatorController, GamepadKeys.Trigger.LEFT_TRIGGER);
 
 
 
@@ -52,16 +54,28 @@ public class teleop extends CommandOpMode {
 
 
     // initiate classes
-    ArmSubsystem armSubsystem = new ArmSubsystem();
-    PivotSubsystem pivotSubsystem = new PivotSubsystem();
-    IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-    DriveSubsystem driveSubsystem = new DriveSubsystem();
+    private ArmSubsystem armSubsystem; // = new ArmSubsystem();
+    private PivotSubsystem pivotSubsystem; // = new PivotSubsystem();
+    private IntakeSubsystem intakeSubsystem; // = new IntakeSubsystem();
+    private DriveSubsystem driveSubsystem; // = new DriveSubsystem();
 
 
 
     @Override
     public void initialize() {
+        waitForStart();
+
         CommandScheduler.getInstance().reset();
+
+        // assign the things to the things
+        manipulatorController = new GamepadEx(gamepad2);
+        driveController = new GamepadEx(gamepad1);
+
+        armSubsystem = new ArmSubsystem(hardwareMap, "frontTelescope", "backTelescope");
+        pivotSubsystem = new PivotSubsystem(hardwareMap, "leftPivot", "rightPivot");
+        intakeSubsystem = new IntakeSubsystem(hardwareMap, "leftWrist", "rightWrist", "intake");
+        driveSubsystem = new DriveSubsystem(hardwareMap, "leftFront", "leftBack", "rightFront", "rightBack", "imu");
+
         driveSubsystem.initializeDrive();
     }
 
@@ -89,7 +103,7 @@ public class teleop extends CommandOpMode {
 
         // TODO turn to positions
 
-        CommandScheduler.getInstance().setDefaultCommand(armSubsystem, armSubsystem.setMotors(0));
+        //CommandScheduler.getInstance().setDefaultCommand(armSubsystem, armSubsystem.setMotors(0));
 
 
 

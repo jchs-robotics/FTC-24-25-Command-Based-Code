@@ -56,8 +56,12 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
 
-    public void Drive() {
+    public void Drive(double FLPower, double BLPower, double FRPower, double BRPower) {
 // move the motors
+        FLDrive.setPower(FLPower);
+        BLDrive.setPower(BLPower);
+        FRDrive.setPower(FRPower);
+        BRDrive.setPower(BRPower);
     }
 
     public void resetYaw() {

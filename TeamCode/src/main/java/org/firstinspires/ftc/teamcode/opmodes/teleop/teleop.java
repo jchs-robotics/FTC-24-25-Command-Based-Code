@@ -1,20 +1,16 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
+import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.button.Button;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.arcrobotics.ftclib.gamepad.TriggerReader;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.components.commands.armPIDCommand;
+import org.firstinspires.ftc.teamcode.components.commands.pivotPIDCommand;
 import org.firstinspires.ftc.teamcode.components.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.components.subsystems.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.components.subsystems.IntakeSubsystem;
@@ -63,7 +59,7 @@ public class teleop extends CommandOpMode {
 
     @Override
     public void initialize() {
-        waitForStart();
+       // waitForStart();
 
         CommandScheduler.getInstance().reset();
 
@@ -78,6 +74,9 @@ public class teleop extends CommandOpMode {
 
         driveSubsystem.initializeDrive();
     }
+
+
+
 
     @Override
     public void run() {
@@ -101,13 +100,24 @@ public class teleop extends CommandOpMode {
 
 
 
+// ~~~~~~~~~~ PRESS AND BUTTON AND DO SOMETHING ~~~~~~~~~~ //
         // TODO turn to positions
 
         //CommandScheduler.getInstance().setDefaultCommand(armSubsystem, armSubsystem.setMotors(0));
 
 
 
+        // TODO manipulator set positions
+        // button(button).onTrue(seq)
 
+        // zero when you press dpad down
+        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_DOWN).whenPressed(zeroSeq());
+        // go to intake position when dpad left
+        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_LEFT).whenPressed(intakeSeq());
+        // go to mid basket when dpad right
+        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_RIGHT).whenPressed(medSeq());
+        // go to high basket when dpad up
+        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_UP).whenPressed(highSeq());
 
 
 
@@ -149,13 +159,48 @@ public class teleop extends CommandOpMode {
 
 
 
+        // useful telemetry
+
+
     }
 
 
 
 
+    // ~~~~~~~~~~ COMMAND GROUPS FOR MANIPULATOR ~~~~~~~~~~ //
 
 
+    public Command zeroSeq() { // when you press a button it moves manipulators to starting position
+        return new SequentialCommandGroup(
+                intakeSubsystem.setIntake(0),
+                new armPIDCommand(armSubsystem, 0),
+                new pivotPIDCommand(pivotSubsystem, 0)
+        );
+    }
+
+    public Command intakeSeq() { // when you press a button it moves manipulators to ground
+        return new SequentialCommandGroup(
+                intakeSubsystem.setIntake(1),
+                new pivotPIDCommand(pivotSubsystem, -350),
+                new armPIDCommand(armSubsystem, 100)
+        );
+    }
+
+    public Command medSeq() { // when you press a button it moves manipulators to middle basket
+        return new SequentialCommandGroup(
+                new pivotPIDCommand(pivotSubsystem, 1250),
+                new armPIDCommand(armSubsystem, 100),
+                intakeSubsystem.setIntake(-1)
+        );
+    }
+
+    public Command highSeq() { // when you press a button it moves manipulators to high basket
+        return new SequentialCommandGroup(
+                new pivotPIDCommand(pivotSubsystem, 1250),
+                new armPIDCommand(armSubsystem, 200),
+                intakeSubsystem.setIntake(-1)
+        );
+    }
 
 
 

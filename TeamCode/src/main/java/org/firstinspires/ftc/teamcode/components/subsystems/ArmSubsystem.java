@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.components.subsystems;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
@@ -28,9 +29,11 @@ public class ArmSubsystem extends SubsystemBase {
         FArm = hMap.get(DcMotor.class, FName);
         BArm = hMap.get(DcMotor.class, BName);
 
-        BArm.setDirection(DcMotorSimple.Direction.REVERSE);
+        //BArm.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        armEncoder = FArm.getCurrentPosition();
+        // armEncoder = FArm.getCurrentPosition();
+        FArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
 //    public ArmSubsystem(){
@@ -75,6 +78,14 @@ public class ArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-
+//        if (FArm != null) {
+//            armEncoder = FArm.getCurrentPosition();
+//
+//            telemetry.addData("Front Arm Encoder: ", armEncoder);
+//            telemetry.addLine();
+//        }
     }
+
+
+
 }

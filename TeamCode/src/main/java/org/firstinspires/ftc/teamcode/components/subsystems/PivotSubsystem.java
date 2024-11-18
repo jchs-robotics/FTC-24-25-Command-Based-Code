@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.components.subsystems;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -25,7 +26,11 @@ public class PivotSubsystem extends SubsystemBase {
 
         RPivot.setDirection(DcMotorSimple.Direction.REVERSE);
 
-    pivotEncoder = LPivot.getCurrentPosition();
+        // pivotEncoder = LPivot.getCurrentPosition();
+
+        LPivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        RPivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
     }
 
 //    public PivotSubsystem(){
@@ -48,8 +53,8 @@ public class PivotSubsystem extends SubsystemBase {
 
 
     public void setDefaultCommand(double LPower, double RPower) {
-        LPivot.setPower(LPower - RPower);
-        RPivot.setPower(LPower - RPower);
+        LPivot.setPower(RPower - LPower);
+        RPivot.setPower(RPower - LPower);
     }
 
 
@@ -62,6 +67,14 @@ public class PivotSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-
+//        if (LPivot != null) {
+//            pivotEncoder = LPivot.getCurrentPosition();
+//
+//            telemetry.addData("Left Pivot Encoder: ", pivotEncoder);
+//            telemetry.addLine();
+//        }
     }
+
+
+
 }

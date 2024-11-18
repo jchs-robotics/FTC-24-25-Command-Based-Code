@@ -1,13 +1,8 @@
 package org.firstinspires.ftc.teamcode.components.subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -77,9 +72,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
         // wrist
         if (B) {
-            wristPower = -1;
+            wristPower = 1; // wrist down
         } else if (Y) {
-            wristPower = 1;
+            wristPower = -1; // wrist up
         } else {
             wristPower = 0;
         }

@@ -10,6 +10,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.components.commands.armPIDCommand;
+import org.firstinspires.ftc.teamcode.components.commands.intakeCommand;
 import org.firstinspires.ftc.teamcode.components.commands.pivotPIDCommand;
 import org.firstinspires.ftc.teamcode.components.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.components.subsystems.DriveSubsystem;
@@ -110,15 +111,15 @@ public class teleop extends CommandOpMode {
         // TODO manipulator set positions
         // button(button).onTrue(seq)
 
+        // FIXME when these are uncommented the intake just spins for some reason
         // zero when you press dpad down
-        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_DOWN).whenPressed(zeroSeq());
-        // go to intake position when dpad left
-        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_LEFT).whenPressed(intakeSeq());
-        // go to mid basket when dpad right
-        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_RIGHT).whenPressed(medSeq());
-        // go to high basket when dpad up
-        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_UP).whenPressed(highSeq());
-
+//        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_DOWN).whenPressed(zeroSeq());
+//        // go to intake position when dpad left
+//        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_LEFT).whenPressed(intakeSeq());
+//        // go to mid basket when dpad right
+//        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_RIGHT).whenPressed(medSeq());
+//        // go to high basket when dpad up
+//        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_UP).whenPressed(highSeq());
 
 
 
@@ -172,7 +173,7 @@ public class teleop extends CommandOpMode {
 
     public Command zeroSeq() { // when you press a button it moves manipulators to starting position
         return new SequentialCommandGroup(
-                intakeSubsystem.setIntake(0),
+                new intakeCommand(intakeSubsystem, 0, 0),
                 new armPIDCommand(armSubsystem, 0),
                 new pivotPIDCommand(pivotSubsystem, 0)
         );
@@ -180,7 +181,7 @@ public class teleop extends CommandOpMode {
 
     public Command intakeSeq() { // when you press a button it moves manipulators to ground
         return new SequentialCommandGroup(
-                intakeSubsystem.setIntake(1),
+                new intakeCommand(intakeSubsystem, 0, 1),
                 new pivotPIDCommand(pivotSubsystem, -350),
                 new armPIDCommand(armSubsystem, 100)
         );
@@ -190,7 +191,7 @@ public class teleop extends CommandOpMode {
         return new SequentialCommandGroup(
                 new pivotPIDCommand(pivotSubsystem, 1250),
                 new armPIDCommand(armSubsystem, 100),
-                intakeSubsystem.setIntake(-1)
+                new intakeCommand(intakeSubsystem, 0, -1)
         );
     }
 
@@ -198,7 +199,7 @@ public class teleop extends CommandOpMode {
         return new SequentialCommandGroup(
                 new pivotPIDCommand(pivotSubsystem, 1250),
                 new armPIDCommand(armSubsystem, 200),
-                intakeSubsystem.setIntake(-1)
+                new intakeCommand(intakeSubsystem, 0, -1)
         );
     }
 

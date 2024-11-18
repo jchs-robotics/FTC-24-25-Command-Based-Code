@@ -8,8 +8,10 @@ public class intakeCommand extends CommandBase {
     private final IntakeSubsystem m_subsystem;
 
 
-    public intakeCommand(IntakeSubsystem subsystem) {
+    public intakeCommand(IntakeSubsystem subsystem, double wristPower, double intakePower) {
         m_subsystem = subsystem;
+        m_subsystem.setWrist(wristPower);
+        m_subsystem.setIntake(intakePower);
         addRequirements(subsystem);
     }
 

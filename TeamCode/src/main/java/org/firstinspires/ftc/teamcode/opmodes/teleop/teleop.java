@@ -26,30 +26,6 @@ public class teleop extends CommandOpMode {
     private GamepadEx driveController; // = new GamepadEx(gamepad1);
 
 
-    // manipulator buttons
-    // set positions (command groups)
-//    Button mDown = new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_DOWN);
-//    Button mLeft = new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_LEFT);
-//    Button mRight = new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_RIGHT);
-//
-//
-//    // manual control
-//    Button mA = new GamepadButton(manipulatorController, GamepadKeys.Button.A);
-//    Button mB = new GamepadButton(manipulatorController, GamepadKeys.Button.B);
-//
-//    Button mLeftBumper = new GamepadButton(manipulatorController, GamepadKeys.Button.LEFT_BUMPER);
-//    Button mRightBumper = new GamepadButton(manipulatorController, GamepadKeys.Button.RIGHT_BUMPER);
-//
-//    TriggerReader mRightTrigger = new TriggerReader(manipulatorController, GamepadKeys.Trigger.RIGHT_TRIGGER);
-//    TriggerReader mLeftTrigger = new TriggerReader(manipulatorController, GamepadKeys.Trigger.LEFT_TRIGGER);
-
-
-
-
-
-
-
-
     // initiate classes
     private ArmSubsystem armSubsystem; // = new ArmSubsystem();
     private PivotSubsystem pivotSubsystem; // = new PivotSubsystem();
@@ -112,51 +88,17 @@ public class teleop extends CommandOpMode {
         // button(button).onTrue(seq)
 
         // FIXME when these are uncommented the intake just spins for some reason
+        //  - intake command never ends
+        //      - change intake to manual only? that would fix issues + give more control
+
         // zero when you press dpad down
-//        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_DOWN).whenPressed(zeroSeq());
-//        // go to intake position when dpad left
-//        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_LEFT).whenPressed(intakeSeq());
-//        // go to mid basket when dpad right
-//        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_RIGHT).whenPressed(medSeq());
-//        // go to high basket when dpad up
-//        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_UP).whenPressed(highSeq());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    // manual manipulator controls ----- THESE TURNED INTO THE DEFAULT COMMANDS
-//
-//        // arm control
-//        mA.whileHeld(armSubsystem.setMotors(1)); // extend arm
-//        mB.whileHeld(armSubsystem.setMotors(-1)); // retract arm
-//
-//        // pivot control
-//        if (mLeftTrigger.isDown()) {
-//            pivotSubsystem.setMotors(-0.5); // pivot go backwards
-//        }
-//        if (mRightTrigger.isDown()) {
-//            pivotSubsystem.setMotors(0.5); // pivot go forwards
-//        }
-//
-//        // intake control
-//        mLeftBumper.whenPressed(intakeSubsystem.setIntake(1)); // intake
-//        mRightBumper.whenPressed(intakeSubsystem.setIntake(-1)); // outtake
-
+        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_DOWN).whenPressed(zeroSeq());
+        // go to intake position when dpad left
+        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_LEFT).whenPressed(intakeSeq());
+        // go to mid basket when dpad right
+        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_RIGHT).whenPressed(medSeq());
+        // go to high basket when dpad up
+        new GamepadButton(manipulatorController, GamepadKeys.Button.DPAD_UP).whenPressed(highSeq());
 
 
 
@@ -173,7 +115,7 @@ public class teleop extends CommandOpMode {
 
     public Command zeroSeq() { // when you press a button it moves manipulators to starting position
         return new SequentialCommandGroup(
-                new intakeCommand(intakeSubsystem, 0, 0),
+                new intakeCommand(intakeSubsystem, 0, 0), // FIXME intake command never ends
                 new armPIDCommand(armSubsystem, 0),
                 new pivotPIDCommand(pivotSubsystem, 0)
         );
@@ -181,25 +123,27 @@ public class teleop extends CommandOpMode {
 
     public Command intakeSeq() { // when you press a button it moves manipulators to ground
         return new SequentialCommandGroup(
-                new intakeCommand(intakeSubsystem, 0, 1),
+                new intakeCommand(intakeSubsystem, 0, 1), // FIXME intake command never ends
                 new pivotPIDCommand(pivotSubsystem, -350),
                 new armPIDCommand(armSubsystem, 100)
         );
     }
 
+
+
     public Command medSeq() { // when you press a button it moves manipulators to middle basket
         return new SequentialCommandGroup(
                 new pivotPIDCommand(pivotSubsystem, 1250),
-                new armPIDCommand(armSubsystem, 100),
-                new intakeCommand(intakeSubsystem, 0, -1)
+                new armPIDCommand(armSubsystem, 100)
+                ,new intakeCommand(intakeSubsystem, 0, -1) // FIXME intake command never ends
         );
     }
 
     public Command highSeq() { // when you press a button it moves manipulators to high basket
         return new SequentialCommandGroup(
                 new pivotPIDCommand(pivotSubsystem, 1250),
-                new armPIDCommand(armSubsystem, 200),
-                new intakeCommand(intakeSubsystem, 0, -1)
+                new armPIDCommand(armSubsystem, 200)
+                ,new intakeCommand(intakeSubsystem, 0, -1) // FIXME intake command never ends
         );
     }
 
@@ -210,4 +154,4 @@ public class teleop extends CommandOpMode {
 
 
 
-}
+} // end of class

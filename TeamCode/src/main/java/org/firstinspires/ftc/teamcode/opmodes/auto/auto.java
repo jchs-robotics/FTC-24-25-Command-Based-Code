@@ -15,7 +15,6 @@ import org.firstinspires.ftc.teamcode.components.subsystems.PivotSubsystem;
 public class auto extends CommandOpMode {
 
     // initiate classes
-    // totally a change yup
     private ArmSubsystem armSubsystem; // = new ArmSubsystem();
     private PivotSubsystem pivotSubsystem; // = new PivotSubsystem();
     private IntakeSubsystem intakeSubsystem; // = new IntakeSubsystem();

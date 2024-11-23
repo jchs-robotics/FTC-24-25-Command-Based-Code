@@ -69,14 +69,12 @@ public class ArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-//        if (FArm != null) {
-//            armEncoder = FArm.getCurrentPosition();
-//
-//            telemetry.addData("Front Arm Encoder: ", armEncoder);
-//            telemetry.addLine();
-//        }
+        armEncoder = FArm.getCurrentPosition();
     }
 
+    public boolean tolerance(double point) {
+        return armEncoder < (point + 10) && armEncoder > (point - 10);
+    }
 
 
 }

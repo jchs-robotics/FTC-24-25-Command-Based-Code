@@ -61,7 +61,7 @@ public class timedDrive extends OpMode {
         telescopeB = hardwareMap.get(DcMotor.class, "backTelescope");
 
 
-        pivotL.setDirection(DcMotorSimple.Direction.REVERSE);
+        pivotR.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         pivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -163,11 +163,11 @@ public class timedDrive extends OpMode {
 
         // manual pivotd
         if (gamepad2.left_trigger > 0.15) { // lowers pivot
-            pivotL.setPower(0.5);
-            pivotR.setPower(0.5);
-        } else if (gamepad2.right_trigger > 0.15) { // raises pivot
             pivotL.setPower(-0.5);
             pivotR.setPower(-0.5);
+        } else if (gamepad2.right_trigger > 0.15) { // raises pivot
+            pivotL.setPower(0.5);
+            pivotR.setPower(0.5);
         } else {
             pivotL.setPower(0);
             pivotR.setPower(0);

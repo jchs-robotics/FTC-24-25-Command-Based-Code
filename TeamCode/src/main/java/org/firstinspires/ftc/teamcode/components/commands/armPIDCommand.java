@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.components.commands;
 
+import static java.lang.Math.abs;
+
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 
@@ -11,7 +13,7 @@ public class armPIDCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingluarField"})
     private final ArmSubsystem m_subsystem;
     private final PIDController pidController;
-    //private double point;
+    private double point;
 
 
 
@@ -20,6 +22,7 @@ public class armPIDCommand extends CommandBase {
         this.m_subsystem = subsystem;
         this.pidController = new PIDController(constants.armP, constants.armI, constants.armD);
         pidController.setSetPoint(setpoint);
+        point = setpoint;
         addRequirements(subsystem);
     }
 
@@ -27,7 +30,7 @@ public class armPIDCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        //pidController.reset()
+        pidController.reset();
     }
 
     @Override
@@ -37,6 +40,15 @@ public class armPIDCommand extends CommandBase {
         m_subsystem.setMotors(speed);
     }
 
+    @Override
+    public void end(boolean interrupted) {
+        m_subsystem.setMotors(0);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return m_subsystem.tolerance(point);
+    }
 
 
 }

@@ -46,13 +46,28 @@ public class constants {
 
 // PID CONSTANTS
 // P > D > I
-    public static double armP = 0.1;
+    //TODO
+    public static double armP = 0.01;
     public static double armI = 0;
     public static double armD = 0;
-
-    public static double pivotP = 0.1;
+    //TODO
+    public static double pivotP = 0.01;
     public static double pivotI = 0;
     public static double pivotD = 0;
+
+
+
+// setpoints
+
+    // pivot setpoints
+    public static double pivotUp = 1000;
+    public static double pivotZero = 0;
+    public static double pivotDown = -350;
+
+    // arm setpoints
+    public static double armHigh = -1000;
+    public static double armMid = -500;
+    public static double armZero = -100;
 
 
 }

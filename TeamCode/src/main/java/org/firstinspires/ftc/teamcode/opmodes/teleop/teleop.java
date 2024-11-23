@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes.teleop;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -10,8 +11,8 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.components.commands.armPIDCommand;
-import org.firstinspires.ftc.teamcode.components.commands.intakeCommand;
 import org.firstinspires.ftc.teamcode.components.commands.pivotPIDCommand;
+import org.firstinspires.ftc.teamcode.components.constants;
 import org.firstinspires.ftc.teamcode.components.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.components.subsystems.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.components.subsystems.IntakeSubsystem;
@@ -118,34 +119,44 @@ public class teleop extends CommandOpMode {
     public Command zeroSeq() { // when you press a button it moves manipulators to starting position
         return new SequentialCommandGroup(
                // new intakeCommand(intakeSubsystem, 0, 0), // FIXME intake command never ends
-                new armPIDCommand(armSubsystem, 0),
-                new pivotPIDCommand(pivotSubsystem, 0)
+
+//                new armPIDCommand(armSubsystem, constants.armZero),
+                new pivotPIDCommand(pivotSubsystem, constants.pivotZero)
         );
     }
 
     public Command intakeSeq() { // when you press a button it moves manipulators to ground
-        return new SequentialCommandGroup(
+        return new ParallelCommandGroup(
                 //new intakeCommand(intakeSubsystem, 0, 1), // FIXME intake command never ends
-                new pivotPIDCommand(pivotSubsystem, -300),
-                new armPIDCommand(armSubsystem, 50)
+
+                new pivotPIDCommand(pivotSubsystem, constants.pivotDown)
+
+
+//                ,new armPIDCommand(armSubsystem, constants.armMid)
         );
     }
 
 
 
     public Command medSeq() { // when you press a button it moves manipulators to middle basket
-        return new SequentialCommandGroup(
-               // new pivotPIDCommand(pivotSubsystem, 1250),
-                new armPIDCommand(armSubsystem, 50)
-                ,new intakeCommand(intakeSubsystem, 0, -1) // FIXME intake command never ends
+        return new ParallelCommandGroup(
+
+                new pivotPIDCommand(pivotSubsystem, constants.pivotUp)
+
+
+               // ,new armPIDCommand(armSubsystem, constants.armMid)
+                // ,new intakeCommand(intakeSubsystem, 0, -1) // FIXME intake command never ends
         );
     }
 
     public Command highSeq() { // when you press a button it moves manipulators to high basket
-        return new SequentialCommandGroup(
-                new pivotPIDCommand(pivotSubsystem, 1250),
-                new armPIDCommand(armSubsystem, 100)
-               // ,new intakeCommand(intakeSubsystem, 0, -1) // FIXME intake command never ends
+        return new ParallelCommandGroup(
+
+                new pivotPIDCommand(pivotSubsystem, constants.pivotUp)
+
+
+//                ,new armPIDCommand(armSubsystem, constants.armHigh)
+                // ,new intakeCommand(intakeSubsystem, 0, -1) // FIXME intake command never ends
         );
     }
 

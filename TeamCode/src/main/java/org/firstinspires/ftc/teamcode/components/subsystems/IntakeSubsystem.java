@@ -66,9 +66,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
         // wrist
         if (B) {
-            wristPower = 1; // wrist down
+            wristPower = -1; // wrist down
         } else if (Y) {
-            wristPower = -1; // wrist up
+            wristPower = 1; // wrist up
         } else {
             wristPower = 0;
         }

@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.components.subsystems;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
+import static java.lang.Math.abs;
+
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorImpl;
@@ -26,7 +28,8 @@ public class PivotSubsystem extends SubsystemBase {
 
         RPivot.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        // pivotEncoder = LPivot.getCurrentPosition();
+        // UP IS POSITIVE
+       // pivotEncoder = LPivot.getCurrentPosition();
 
         LPivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         RPivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -51,20 +54,28 @@ public class PivotSubsystem extends SubsystemBase {
 
 
 
-
-
-
+//    public double getPivotPos() {
+//        return pivotEncoder;
+//    }
+//
+//    public boolean isAtPivotPos() {
+//        double error = getPivotPos() -
+//    }
 
 
 
     @Override
     public void periodic() {
-//        if (LPivot != null) {
-//            pivotEncoder = LPivot.getCurrentPosition();
-//
-//            telemetry.addData("Left Pivot Encoder: ", pivotEncoder);
-//            telemetry.addLine();
-//        }
+
+            //telemetry.addData("Left Pivot Encoder: ", pivotEncoder);
+
+        pivotEncoder = LPivot.getCurrentPosition();
+
+    }
+
+
+    public boolean tolerance(double point) {
+        return pivotEncoder < (point + 10) && pivotEncoder > (point - 10);
     }
 
 

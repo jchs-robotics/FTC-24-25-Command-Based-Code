@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.components.commands;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 
+import org.firstinspires.ftc.teamcode.components.constants;
 import org.firstinspires.ftc.teamcode.components.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.components.subsystems.PivotSubsystem;
 
@@ -13,9 +14,11 @@ public class armPIDCommand extends CommandBase {
     //private double point;
 
 
+
+
     public armPIDCommand(ArmSubsystem subsystem, double setpoint) {
         this.m_subsystem = subsystem;
-        this.pidController = new PIDController(0.0, 0.0, 0.000);
+        this.pidController = new PIDController(constants.armP, constants.armI, constants.armD);
         pidController.setSetPoint(setpoint);
         addRequirements(subsystem);
     }

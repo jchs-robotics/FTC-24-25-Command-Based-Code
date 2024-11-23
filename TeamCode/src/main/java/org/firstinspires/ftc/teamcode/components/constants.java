@@ -41,4 +41,18 @@ public class constants {
 
     // INTAKE
 
+
+
+
+// PID CONSTANTS
+// P > D > I
+    public static double armP = 0.1;
+    public static double armI = 0;
+    public static double armD = 0;
+
+    public static double pivotP = 0.1;
+    public static double pivotI = 0;
+    public static double pivotD = 0;
+
+
 }

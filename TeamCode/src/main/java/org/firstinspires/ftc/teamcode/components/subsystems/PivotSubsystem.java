@@ -33,15 +33,7 @@ public class PivotSubsystem extends SubsystemBase {
 
     }
 
-//    public PivotSubsystem(){
-//
-//        LPivot = hardwareMap.get(DcMotor.class, "leftPivot");
-//        RPivot = hardwareMap.get(DcMotor.class, "rightPivot");
-//
-//        RPivot.setDirection(DcMotorSimple.Direction.REVERSE);
-//
-//        pivotEncoder = LPivot.getCurrentPosition();
-//    }
+
 
 
     // rotates pivot

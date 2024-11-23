@@ -59,7 +59,9 @@ public class teleop extends CommandOpMode {
     public void run() {
         CommandScheduler.getInstance().run();
 
-
+        if (gamepad1.back) {
+            driveSubsystem.resetYaw();
+        }
 // ~~~~~~~~~~ MANUAL CONTROLS ~~~~~~~~~~ //
 
 // joystick movement for drive
@@ -115,7 +117,7 @@ public class teleop extends CommandOpMode {
 
     public Command zeroSeq() { // when you press a button it moves manipulators to starting position
         return new SequentialCommandGroup(
-                new intakeCommand(intakeSubsystem, 0, 0), // FIXME intake command never ends
+               // new intakeCommand(intakeSubsystem, 0, 0), // FIXME intake command never ends
                 new armPIDCommand(armSubsystem, 0),
                 new pivotPIDCommand(pivotSubsystem, 0)
         );
@@ -123,9 +125,9 @@ public class teleop extends CommandOpMode {
 
     public Command intakeSeq() { // when you press a button it moves manipulators to ground
         return new SequentialCommandGroup(
-                new intakeCommand(intakeSubsystem, 0, 1), // FIXME intake command never ends
-                new pivotPIDCommand(pivotSubsystem, -350),
-                new armPIDCommand(armSubsystem, 100)
+                //new intakeCommand(intakeSubsystem, 0, 1), // FIXME intake command never ends
+                new pivotPIDCommand(pivotSubsystem, -300),
+                new armPIDCommand(armSubsystem, 50)
         );
     }
 
@@ -133,8 +135,8 @@ public class teleop extends CommandOpMode {
 
     public Command medSeq() { // when you press a button it moves manipulators to middle basket
         return new SequentialCommandGroup(
-                new pivotPIDCommand(pivotSubsystem, 1250),
-                new armPIDCommand(armSubsystem, 100)
+               // new pivotPIDCommand(pivotSubsystem, 1250),
+                new armPIDCommand(armSubsystem, 50)
                 ,new intakeCommand(intakeSubsystem, 0, -1) // FIXME intake command never ends
         );
     }
@@ -142,8 +144,8 @@ public class teleop extends CommandOpMode {
     public Command highSeq() { // when you press a button it moves manipulators to high basket
         return new SequentialCommandGroup(
                 new pivotPIDCommand(pivotSubsystem, 1250),
-                new armPIDCommand(armSubsystem, 200)
-                ,new intakeCommand(intakeSubsystem, 0, -1) // FIXME intake command never ends
+                new armPIDCommand(armSubsystem, 100)
+               // ,new intakeCommand(intakeSubsystem, 0, -1) // FIXME intake command never ends
         );
     }
 

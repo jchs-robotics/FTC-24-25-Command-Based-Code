@@ -29,12 +29,6 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
 
-//    public IntakeSubsystem() {
-//        LWrist = hardwareMap.get(CRServo.class, "leftWrist");
-//        RWrist = hardwareMap.get(CRServo.class, "rightWrist");
-//
-//        Intake = hardwareMap.get(CRServo.class, "intake");
-//    }
 
 
 

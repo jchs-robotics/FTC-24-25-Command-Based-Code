@@ -36,15 +36,6 @@ public class ArmSubsystem extends SubsystemBase {
         BArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-//    public ArmSubsystem(){
-//
-////        LArm = hardwareMap.get(DcMotor.class, "leftTelescope");
-////        RArm = hardwareMap.get(DcMotor.class, "rightTelescope");
-//
-////        RArm.setDirection(DcMotorSimple.Direction.REVERSE);
-////
-////        armEncoder = LArm.getCurrentPosition();
-//    }
 
 
     // extend/retract telescope

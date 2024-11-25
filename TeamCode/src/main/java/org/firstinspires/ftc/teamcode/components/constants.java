@@ -45,15 +45,22 @@ public class constants {
 
 
 // PID CONSTANTS
+// tune a letter until it starts oscillation
 // P > D > I
-    //TODO
-    public static double armP = 0.01;
-    public static double armI = 0;
-    public static double armD = 0;
-    //TODO
-    public static double pivotP = 0.01;
-    public static double pivotI = 0;
-    public static double pivotD = 0;
+    // FIXME will have to change PID if mechanical changes stuff (make chain better? please)
+
+    // TODO tune arm PID
+    //  slower than teleop :(
+    public static double armP = 0.07;
+    public static double armI = 0.0001;
+    public static double armD = 0.001;
+
+    // TODO tune pivot PID
+    //  slower than teleop :(
+    public static double pivotP = 0.05; // 0.15
+    public static double pivotI = 0.00; // 0.001
+    public static double pivotD = 0.00; // 0.01, 0.009
+
 
 
 
@@ -65,9 +72,9 @@ public class constants {
     public static double pivotDown = -350;
 
     // arm setpoints
-    public static double armHigh = -1000;
-    public static double armMid = -500;
-    public static double armZero = -100;
+    public static double armHigh = -1500;
+    public static double armMid = -1000;
+    public static double armZero = -200;
 
 
 }

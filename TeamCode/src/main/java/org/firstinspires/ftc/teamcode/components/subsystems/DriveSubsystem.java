@@ -22,6 +22,8 @@ public class DriveSubsystem extends SubsystemBase {
 
     private IMU imu;
 
+    public double FLEncoder;
+
     //FIXME Adjust the orientation parameters to match your robot
     IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
             RevHubOrientationOnRobot.LogoFacingDirection.UP,
@@ -53,6 +55,11 @@ public class DriveSubsystem extends SubsystemBase {
 
         FLDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         BLDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        FLDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BLDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        FRDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BRDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
 
@@ -64,9 +71,40 @@ public class DriveSubsystem extends SubsystemBase {
         BRDrive.setPower(BRPower);
     }
 
+    public void Stop() {
+        FLDrive.setPower(0);
+        BLDrive.setPower(0);
+        FRDrive.setPower(0);
+        BRDrive.setPower(0);
+    }
+
+
+
+
+
+    @Override
+    public void periodic() {
+        FLEncoder = FLDrive.getCurrentPosition();
+    }
+
+    public boolean tolerance(double point) {
+        return FLEncoder < (point + 2.5) && FLEncoder > (point - 2.5);
+    }
+
+
+
+
+
     public void resetYaw() {
         imu.resetYaw();
     }
+
+
+
+
+
+
+
 
     public void setDefaultCommand(double inputX, double inputY, double inputRX) {
 
@@ -100,8 +138,6 @@ public class DriveSubsystem extends SubsystemBase {
 
 
 
-    @Override
-    public void periodic() {
-    }
+
 
 }

@@ -46,19 +46,7 @@ public class ArmSubsystem extends SubsystemBase {
 
 
 
-    public void setDefaultCommand(boolean A, boolean X) {
-        if (A) {
-            manualPower = 0.9;
-        } else if (X) {
-            manualPower = -0.9;
-        } else {
-            manualPower = 0;
-        }
 
-        FArm.setPower(manualPower);
-        BArm.setPower(manualPower);
-
-    }
 
 
 
@@ -73,7 +61,23 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean tolerance(double point) {
-        return armEncoder < (point + 10) && armEncoder > (point - 10);
+        return armEncoder < (point + 2.5) && armEncoder > (point - 2.5);
+    }
+
+
+    public void setDefaultCommand(boolean A, boolean X) {
+
+        if (A && armEncoder < -200) { // retract
+            manualPower = 0.9;
+        } else if (X && armEncoder > -1500) { // extend
+            manualPower = -0.9;
+        } else {
+            manualPower = 0;
+        }
+
+        FArm.setPower(manualPower);
+        BArm.setPower(manualPower);
+
     }
 
 

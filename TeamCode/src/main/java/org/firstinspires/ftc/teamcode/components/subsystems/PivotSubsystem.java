@@ -48,8 +48,19 @@ public class PivotSubsystem extends SubsystemBase {
 
 
     public void setDefaultCommand(double LPower, double RPower) {
-        LPivot.setPower(RPower - LPower);
-        RPivot.setPower(RPower - LPower);
+//        LPivot.setPower(Math.pow((RPower - LPower), 3));
+//        RPivot.setPower(Math.pow((RPower - LPower), 3));
+        if (LPower > 0.15) { // lower
+            LPivot.setPower(-0.75);
+            RPivot.setPower(-0.75);
+        } else if (RPower > 0.15) { // raise
+            LPivot.setPower(0.75);
+            RPivot.setPower(0.75);
+        } else {
+            LPivot.setPower(0);
+            RPivot.setPower(0);
+        }
+
     }
 
 
@@ -75,7 +86,7 @@ public class PivotSubsystem extends SubsystemBase {
 
 
     public boolean tolerance(double point) {
-        return pivotEncoder < (point + 10) && pivotEncoder > (point - 10);
+        return pivotEncoder < (point + 2.5) && pivotEncoder > (point - 2.5);
     }
 
 

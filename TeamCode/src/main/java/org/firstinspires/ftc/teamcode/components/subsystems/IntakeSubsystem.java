@@ -52,10 +52,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
         // intake
-        if (Rump) {
+        if (Rump) { // intake
             intakePower = 1;
         } else if (Lump) {
-            intakePower = -1;
+            intakePower = -1; // outtake
         } else {
             intakePower = 0;
         }

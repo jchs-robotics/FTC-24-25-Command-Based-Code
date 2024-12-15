@@ -67,18 +67,34 @@ public class teleop extends CommandOpMode {
 // ~~~~~~~~~~ MANUAL CONTROLS ~~~~~~~~~~ //
 
 // joystick movement for drive
-        driveSubsystem.setDefaultCommand(driveController.getLeftX(), driveController.getLeftY(), driveController.getRightX());
+        driveSubsystem.setDefaultCommand(
+                driveController.getLeftX(),
+                driveController.getLeftY(),
+                driveController.getRightX()
+        );
 
 // when you hold triggers it manually moves pivot
-        pivotSubsystem.setDefaultCommand(manipulatorController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER), manipulatorController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER));
+        pivotSubsystem.setDefaultCommand(
+                manipulatorController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER),
+                manipulatorController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)
+        );
 
 // when you press x or a manually move elevator
-        armSubsystem.setDefaultCommand(manipulatorController.getButton(GamepadKeys.Button.A), manipulatorController.getButton(GamepadKeys.Button.X));
+        armSubsystem.setDefaultCommand(
+                manipulatorController.getButton(GamepadKeys.Button.A),
+                manipulatorController.getButton(GamepadKeys.Button.X)
+        );
 
 // when you hold y or b it moves the wrist
 // when you hold bumpers it rotates intake
-        intakeSubsystem.setDefaultCommand(manipulatorController.getButton(GamepadKeys.Button.LEFT_BUMPER), manipulatorController.getButton(GamepadKeys.Button.RIGHT_BUMPER), manipulatorController.getButton(GamepadKeys.Button.B), manipulatorController.getButton(GamepadKeys.Button.Y));
-
+        intakeSubsystem.setDefaultCommand(
+                manipulatorController.getButton(GamepadKeys.Button.LEFT_BUMPER), // bumpers for intake
+                manipulatorController.getButton(GamepadKeys.Button.RIGHT_BUMPER),
+                manipulatorController.getButton(GamepadKeys.Button.B), // buttons for wrist
+                manipulatorController.getButton(GamepadKeys.Button.Y),
+                manipulatorController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER),// triggers for wrist
+                manipulatorController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)
+        );
 
 
 // ~~~~~~~~~~ PRESS AND BUTTON AND DO SOMETHING ~~~~~~~~~~ //
@@ -115,11 +131,9 @@ public class teleop extends CommandOpMode {
 
 
     // ~~~~~~~~~~ COMMAND GROUPS FOR MANIPULATOR ~~~~~~~~~~ //
-
-
     public Command zeroSeq() { // when you press a button it moves manipulators to starting position
         return new SequentialCommandGroup(
-          new armPIDCommand(armSubsystem, constants.armZero),
+//          new armPIDCommand(armSubsystem, constants.armZero),
           new pivotPIDCommand(pivotSubsystem, constants.pivotZero)
         );
     }

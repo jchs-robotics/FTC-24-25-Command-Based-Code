@@ -44,16 +44,18 @@ public class preload_and_leave extends CommandOpMode {
     public void run() {
         // drive left into observation zone
         if (timer.seconds() >= 0) {
-            driveSubsystem.Drive(-0.5, 0.5, 0.5, -0.5);
+            driveSubsystem.left(0.5);
         }
         if (timer.seconds() >= 5) {
-            driveSubsystem.Drive(0, 0, 0, 0);
+            driveSubsystem.stop();
         }
+
+        // drive right OUT of observation zone
         if (timer.seconds() >= 8) {
-            driveSubsystem.Drive(0.5, -0.5, -0.5, 0.5);
+            driveSubsystem.right(0.5);
         }
         if (timer.seconds() >= 11) {
-            driveSubsystem.Drive(0, 0, 0, 0);
+            driveSubsystem.stop();
         }
     }
 

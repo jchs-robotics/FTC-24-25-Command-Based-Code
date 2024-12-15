@@ -67,9 +67,29 @@ public class ArmSubsystem extends SubsystemBase {
 
     public void setDefaultCommand(boolean A, boolean X) {
 
-        if (A && armEncoder < -200) { // retract
-            manualPower = 0.9;
-        } else if (X && armEncoder > -1500) { // extend
+//        if (A) { // retract
+//            if (armEncoder < -200) {
+//                manualPower = 0.9;
+//            } else if (armEncoder > -200) {
+//                manualPower = 0.5;
+//            }
+//        } else if (X && armEncoder > -1500) { // extend
+//            if (armEncoder > -1500) {
+//                manualPower = -0.9;
+//            } else if (armEncoder < -1500) {
+//                manualPower = -0.5;
+//            }
+//        } else {
+//            manualPower = 0;
+//        }
+
+        if (A) { // retract
+            if (armEncoder < -200) {
+                manualPower = 0.9;
+            } else if (armEncoder > -200) {
+                manualPower = 0.0;
+            }
+        } else if (X) { // extend
             manualPower = -0.9;
         } else {
             manualPower = 0;

@@ -34,28 +34,25 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
   // spin stuff
-    public Command setWrist(double wristPower) {
+    public void setWrist(double wristPower) {
         LWrist.setPower(wristPower);
         RWrist.setPower(wristPower);
-        return null;
     }
 
-    public Command setIntake(double intakePower) {
+    public void setIntake(double intakePower) {
         Intake.setPower(intakePower);
-        return null;
     }
 
 
 
 
-    public void setDefaultCommand(boolean Lump, boolean Rump, boolean B, boolean Y) {
+    public void setDefaultCommand(boolean Lump, boolean Rump, boolean B, boolean Y, double RTrigger, double LTrigger) {
 
 
-        // intake
-        if (Rump) { // intake
+        if (Rump) {
             intakePower = 1;
         } else if (Lump) {
-            intakePower = -1; // outtake
+            intakePower = -1;
         } else {
             intakePower = 0;
         }
@@ -63,12 +60,18 @@ public class IntakeSubsystem extends SubsystemBase {
         Intake.setPower(intakePower);
 
 
-
+// button
         // wrist
-        if (B) {
+        if (Y) {
             wristPower = -1; // wrist down
-        } else if (Y) {
+        } else if (B) {
             wristPower = 1; // wrist up
+        }
+// triggers
+        else if (RTrigger > 0.15) { // wrist up
+            wristPower = -0.25;
+        } else if (LTrigger > 0.15) { // wrist down
+            wristPower = 0.25;
         } else {
             wristPower = 0;
         }

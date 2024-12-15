@@ -51,11 +51,21 @@ public class PivotSubsystem extends SubsystemBase {
 //        LPivot.setPower(Math.pow((RPower - LPower), 3));
 //        RPivot.setPower(Math.pow((RPower - LPower), 3));
         if (LPower > 0.15) { // lower
-            LPivot.setPower(-0.75);
-            RPivot.setPower(-0.75);
+            if (pivotEncoder > -350) {// in safe zone
+                LPivot.setPower(-0.9);
+                RPivot.setPower(-0.9);
+            } else if (pivotEncoder < -350) { // in danger zone
+                LPivot.setPower(-0.6);
+                RPivot.setPower(-0.6);
+            }
         } else if (RPower > 0.15) { // raise
-            LPivot.setPower(0.75);
-            RPivot.setPower(0.75);
+            if (pivotEncoder < 1000) {// in safe zone
+                LPivot.setPower(0.9);
+                RPivot.setPower(0.9);
+            } else if (pivotEncoder > 1000) { // in danger zone
+                LPivot.setPower(0.6);
+                RPivot.setPower(0.6);
+            }
         } else {
             LPivot.setPower(0);
             RPivot.setPower(0);

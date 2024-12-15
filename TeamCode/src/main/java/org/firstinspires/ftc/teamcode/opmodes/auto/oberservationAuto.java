@@ -42,12 +42,12 @@ public class oberservationAuto extends CommandOpMode {
 
     @Override
     public void run() {
-        // drive left into observation zone
+        // drive right into observation zone
         if (timer.seconds() >= 0) {
-            driveSubsystem.Drive(-0.5, 0.5, 0.5, -0.5);
+            driveSubsystem.right(0.5);
         }
         if (timer.seconds() >= 5) {
-            driveSubsystem.Drive(0, 0, 0, 0);
+            driveSubsystem.stop();
         }
     }
 

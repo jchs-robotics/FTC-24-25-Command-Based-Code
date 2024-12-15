@@ -71,7 +71,34 @@ public class DriveSubsystem extends SubsystemBase {
         BRDrive.setPower(BRPower);
     }
 
-    public void Stop() {
+
+    public void fwd(double power) {
+        FLDrive.setPower(power);
+        BLDrive.setPower(power);
+        FRDrive.setPower(power);
+        BRDrive.setPower(power);
+    }
+    public void rev(double power) {
+        FLDrive.setPower(-power);
+        BLDrive.setPower(-power);
+        FRDrive.setPower(-power);
+        BRDrive.setPower(-power);
+    }
+    public void right(double power) {
+        FLDrive.setPower(power);
+        BLDrive.setPower(-power);
+        FRDrive.setPower(-power);
+        BRDrive.setPower(power);
+    }
+    public void left(double power) {
+        FLDrive.setPower(-power);
+        BLDrive.setPower(power);
+        FRDrive.setPower(power);
+        BRDrive.setPower(-power);
+    }
+
+
+    public void stop() {
         FLDrive.setPower(0);
         BLDrive.setPower(0);
         FRDrive.setPower(0);
@@ -90,7 +117,6 @@ public class DriveSubsystem extends SubsystemBase {
     public boolean tolerance(double point) {
         return FLEncoder < (point + 2.5) && FLEncoder > (point - 2.5);
     }
-
 
 
 

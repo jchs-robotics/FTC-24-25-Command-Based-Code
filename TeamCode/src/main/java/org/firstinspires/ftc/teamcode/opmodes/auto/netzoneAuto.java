@@ -42,45 +42,56 @@ public class netzoneAuto extends CommandOpMode {
 
     @Override
     public void run() {
-        // drive forward for 2 seconds
+
+        // strafe and score preload
         if (timer.seconds() >= 0) {
-            driveSubsystem.Drive(0.25, 0.25, 0.25, 0.25);
+            driveSubsystem.left(0.25);
         }
-        // wait
         if (timer.seconds() >= 2) {
-            driveSubsystem.Drive(0, 0, 0, 0);
+            driveSubsystem.stop();
         }
-        // drive left 2 seconds
-        if (timer.seconds() >= 4) {
-            driveSubsystem.Drive(-0.25, 0.25, 0.25, -0.25);
+
+        if (timer.seconds() >= 3) {
+            driveSubsystem.right(0.25);
         }
-        // wait
+        if (timer.seconds() >= 5) {
+            driveSubsystem.stop();
+        }
+        // drive forward towards preload
         if (timer.seconds() >= 6) {
-            driveSubsystem.Drive(0, 0, 0, 0);
-        }
-        // reverse for 2 seconds
-        if (timer.seconds() >= 8) {
-            driveSubsystem.Drive(-0.25, -0.25, -0.25, -0.25);
+            driveSubsystem.fwd(0.25);
         }
         // wait
-        if (timer.seconds() >= 10) {
-            driveSubsystem.Drive(0, 0, 0, 0);
+        if (timer.seconds() >= 7) {
+            driveSubsystem.stop();
         }
-        // drive right 4 seconds
+        // drive left 1 seconds
+        if (timer.seconds() >= 8) {
+            driveSubsystem.left(0.25);
+        }
+        // wait
+        if (timer.seconds() >= 9) {
+            driveSubsystem.stop();
+        }
+        // reverse into net zone
+        if (timer.seconds() >= 10) {
+            driveSubsystem.rev(0.25);
+        }
+        // wait
         if (timer.seconds() >= 12) {
-            driveSubsystem.Drive(0.25, -0.25, -0.25, 0.25);
+            driveSubsystem.stop();
+        }
+
+        // drive fwd to second sample
+        if (timer.seconds() >= 13) {
+            driveSubsystem.right(0.25);
         }
         // stop
-        if (timer.seconds() >= 16) {
-            driveSubsystem.Drive(0, 0, 0, 0);
+        if (timer.seconds() >= 15) {
+            driveSubsystem.stop();
         }
 
 
-
-        // drive forward for 2 seconds
-        if (timer.seconds() >= 28) {
-            driveSubsystem.Drive(0.15, 0.15, 0.15, 0.15);
-        }
 
     }
 

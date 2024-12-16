@@ -72,9 +72,9 @@ public class constants {
     public static double pivotDown = -350;
 
     // arm setpoints
-    public static double armHigh = -1500;
-    public static double armMid = -1000;
-    public static double armZero = -200;
+    public static double armHigh = 1500;
+    public static double armMid = 1000;
+    public static double armZero = 200;
 
 
 }

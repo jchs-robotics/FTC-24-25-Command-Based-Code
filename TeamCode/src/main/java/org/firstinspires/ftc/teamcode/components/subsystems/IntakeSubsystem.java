@@ -69,9 +69,9 @@ public class IntakeSubsystem extends SubsystemBase {
         }
 // triggers
         else if (RTrigger > 0.15) { // wrist up
-            wristPower = -0.25;
+            wristPower = 0.15;
         } else if (LTrigger > 0.15) { // wrist down
-            wristPower = 0.25;
+            wristPower = -0.15;
         } else {
             wristPower = 0;
         }

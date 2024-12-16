@@ -84,13 +84,15 @@ public class ArmSubsystem extends SubsystemBase {
 //        }
 
         if (A) { // retract
-            if (armEncoder < -200) {
-                manualPower = 0.9;
-            } else if (armEncoder > -200) {
-                manualPower = 0.0;
+            if (armEncoder > 200) {
+                manualPower = -0.9;
+//                manualPower = -0.75; // testing value
+            } else if (armEncoder < 200) {
+                manualPower = -0.1;
             }
         } else if (X) { // extend
-            manualPower = -0.9;
+                manualPower = 0.9;
+//            manualPower = 0.75; // testing value
         } else {
             manualPower = 0;
         }
